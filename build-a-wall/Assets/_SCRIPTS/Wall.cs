@@ -2,13 +2,27 @@
 
 public class Wall : MonoBehaviour
 {
+	public static Wall Instance;
+
 	public float health;
 	public bool healthy;
 
 	float wallTimeout = 10;
 	float wallLastDestroyed = -Mathf.Infinity;
 
-	public void Start()
+	void Awake()
+	{
+		if (Instance == null)
+		{
+			Instance = this;
+		}
+		else
+		{
+			Destroy(this);
+		}
+	}
+
+	void Start()
 	{
 		health = 10000;
 		healthy = true;
@@ -18,9 +32,16 @@ public class Wall : MonoBehaviour
 		});
 	}
 
-	public void Update()
+	void Update()
 	{
-		healthy = Time.time - wallLastDestroyed >= wallTimeout;
+		if (!healthy)
+		{
+			if (Time.time - wallLastDestroyed >= wallTimeout)
+			{
+				healthy = true;
+				health = 10000;
+			}
+		}
 	}
 
 	public void TakeDamage(float damage)
@@ -38,14 +59,10 @@ public class Wall : MonoBehaviour
 
 	public void Turn(bool on)
 	{
-		Debug.Log("HEALTHY: " + healthy);
-		
 		if (!healthy)
 		{
 			return;
 		}
-
-		Debug.Log("TURN " + on);
 
 		float to = 0.64f;
 		float from = -1.5f;

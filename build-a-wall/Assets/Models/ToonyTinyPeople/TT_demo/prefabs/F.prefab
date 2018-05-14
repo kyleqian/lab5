@@ -1137,7 +1137,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   personState: 0
   donald: {fileID: 1584518448147898, guid: 3d88c2bb3b2564b71be436ff51c8ceba, type: 2}
-  wall: {fileID: 1813399305844360, guid: 8fef560da479d4b68872df27166ad0d3, type: 2}
+  wall: {fileID: 1517804771935182, guid: 7c409d65ed2184c4eb7bc8d7a0973ad0, type: 2}
 --- !u!136 &136058370750384092
 CapsuleCollider:
   m_ObjectHideFlags: 1

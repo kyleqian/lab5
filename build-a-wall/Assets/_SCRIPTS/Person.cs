@@ -6,7 +6,6 @@ public class Person : MonoBehaviour
 	public PersonState personState;
 	
 	public GameObject donald;
-	public GameObject wall;
 
 	float health = 100;
 	Animator animator;
@@ -37,7 +36,7 @@ public class Person : MonoBehaviour
 				transform.Translate(Vector3.forward * Time.deltaTime * speed);
 				break;
 			case PersonState.AttackingWall:
-				wall.GetComponent<Wall>().TakeDamage(10); // TODO
+				Wall.Instance.TakeDamage(10); // TODO
 				break;
 			case PersonState.AttackingDonald:
 				donald.GetComponent<Donald>().TakeDamage(10); // TODO
