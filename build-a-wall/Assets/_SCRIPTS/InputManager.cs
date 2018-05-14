@@ -58,8 +58,8 @@ public class InputManager : MonoBehaviour
 	{
 		if (debugModeOn)
 		{
-			// float newMouthBreath = Input.GetAxis("Vertical");
-			float newMouthBreath = 1;
+			float newMouthBreath = Input.GetAxis("Vertical");
+			// float newMouthBreath = 1;
 			float newBellyBreath = Input.GetAxis("Horizontal");
 
 			if (newBellyBreath >= 0.8 && bellyBreath < 0.8)
