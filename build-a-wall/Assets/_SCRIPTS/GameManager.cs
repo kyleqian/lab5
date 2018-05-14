@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
 		{
 			SpawnPerson();
 		}
-		InvokeRepeating("SpawnPerson", 0, initSpawnRate);
+		// InvokeRepeating("SpawnPerson", 0, initSpawnRate);
 	}
 	
 	void SpawnPerson()

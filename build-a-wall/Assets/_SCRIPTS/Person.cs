@@ -9,15 +9,17 @@ public class Person : MonoBehaviour
 
 	float health = 100;
 	Animator animator;
+	Rigidbody rb;
 	float speed;
 	float initPitch;
 
 	void Start()
 	{
-		personState = PersonState.Walking;
+		rb = GetComponent<Rigidbody>();
 		animator = GetComponent<Animator>();
+		personState = PersonState.Walking;
 		animator.Play("run");
-		speed = Random.Range(1f, 4f);
+		speed = Random.Range(100f, 300f);
 
 		initPitch = transform.eulerAngles.x;
 		transform.LookAt(donald.transform);
@@ -33,7 +35,7 @@ public class Person : MonoBehaviour
 		switch (personState)
 		{
 			case PersonState.Walking:
-				transform.Translate(Vector3.forward * Time.deltaTime * speed);
+				rb.AddForce(transform.forward * speed);
 				break;
 			case PersonState.AttackingWall:
 				Wall.Instance.TakeDamage(10); // TODO
@@ -44,39 +46,33 @@ public class Person : MonoBehaviour
 		}
 	}
 
-	void OnTriggerEnter(Collider collider)
+	void OnCollisionEnter(Collision collision)
 	{
-		if (collider.tag == "Wall")
+		if (collision.transform.tag == "Wall")
 		{
 			personState = PersonState.AttackingWall;
 			animator.Play("melee");
 		}
-		else if (collider.tag == "Donald")
+		else if (collision.transform.tag == "Donald")
 		{
 			personState = PersonState.AttackingDonald;
 			animator.Play("melee");
 		}
 	}
 
-	void OnTriggerExit(Collider collider)
+	void OnCollisionExit(Collision collision)
 	{
-		if (collider.tag == "Wall")
+		if (collision.transform.tag == "Wall")
 		{
 			personState = PersonState.Walking;
 			animator.Play("run");
 		}
 	}
 
-	void OnParticleCollision(GameObject other)
-	{
-		Debug.Log("PARTICLE COLLIDE");
-		TakeDamage();
-	}
-
-	void TakeDamage()
+	public void TakeDamage(float damage)
 	{
 		// TODO
-		health -= 10;
+		health -= damage;
 
 		if (health <= 0)
 		{
@@ -87,6 +83,6 @@ public class Person : MonoBehaviour
 	void Die()
 	{
 		animator.Play("death");
-		Destroy(this);
+		Destroy(gameObject, 2);
 	}
 }

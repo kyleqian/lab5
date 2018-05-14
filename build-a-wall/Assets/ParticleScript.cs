@@ -2,18 +2,13 @@
 
 public class ParticleScript : MonoBehaviour
 {
-	void Start()
-	{
-		
-	}
-	
-	void Update()
-	{
-		
-	}
-
 	void OnParticleCollision(GameObject other)
 	{
-    	Debug.Log("PS COLLISION: " + other.name);
+		
+		if (other.tag == "Person")
+		{
+			Debug.Log("FIRE HIT: " + other.name);
+			other.GetComponent<Person>().TakeDamage(10);
+		}
 	}
 }

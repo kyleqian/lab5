@@ -4,7 +4,7 @@ public class Donald : MonoBehaviour
 {
 	public ParticleSystem ps;
 
-	float health = 100;
+	float health = 5000;
 
 	void Update()
 	{
