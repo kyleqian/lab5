@@ -5,17 +5,21 @@ public class Person : MonoBehaviour
 	public enum PersonState { Walking, AttackingWall, AttackingDonald, Dying }
 	public PersonState personState;
 	
-	public GameObject donald;
+	private GameObject donald;
+    public AudioClip[] hitClips;
 
 	float health = 100;
 	Animator animator;
 	Rigidbody rb;
 	float speed;
 	float initPitch;
+    float timeUntilCanHit;
 
 	void Start()
 	{
-		rb = GetComponent<Rigidbody>();
+        donald = FindObjectOfType<Donald>().gameObject;
+        timeUntilCanHit = Random.Range(0.0f, 1.0f);
+        rb = GetComponent<Rigidbody>();
 		animator = GetComponent<Animator>();
 		personState = PersonState.Walking;
 		animator.Play("run");
@@ -32,16 +36,33 @@ public class Person : MonoBehaviour
 		transform.LookAt(donald.transform);
 		transform.eulerAngles = new Vector3(initPitch, transform.eulerAngles.y, transform.eulerAngles.z);
 
+        // Update handling for whether they can hit the wall or the player.
+        timeUntilCanHit -= Time.deltaTime;
+        bool canHit = false;
+        if (timeUntilCanHit < 0.0f)
+        {
+            timeUntilCanHit += 1.0f;
+            canHit = true;
+        }
+
 		switch (personState)
 		{
 			case PersonState.Walking:
 				rb.AddForce(transform.forward * speed);
 				break;
 			case PersonState.AttackingWall:
-				Wall.Instance.TakeDamage(10); // TODO
+                if (canHit)
+                {
+                    Wall.Instance.TakeDamage(10f); // TODO
+                    AudioSource.PlayClipAtPoint(hitClips[Random.Range(0, hitClips.Length)], transform.position);
+                }
 				break;
-			case PersonState.AttackingDonald:
-				donald.GetComponent<Donald>().TakeDamage(10); // TODO
+            case PersonState.AttackingDonald:
+                if (canHit)
+                {
+                    donald.GetComponent<Donald>().TakeDamage(10f); // TODO
+                    AudioSource.PlayClipAtPoint(hitClips[Random.Range(0, hitClips.Length)], transform.position);
+                }
 				break;
             case PersonState.Dying:
             default:
