@@ -25,15 +25,20 @@ public class InputManager : MonoBehaviour
 	// From 0.0 to 1.0
 	public float bellyBreath;
 	public float mouthBreath;
+    public float lookHoriz = 0.0f;
+    public float lookVert = 0.0f;
 	public int neulogRequestsPerSecond;
+    public bool usingHmd;
 
 	private const string NEULOG_URL = "http://localhost:22002/NeuLogAPI?GetSensorValue:[Respiration],[1]";
     private Queue<float> breathQueue = new Queue<float>();
     private int breathQueueMaxSize;
 	private bool debugModeOn = true; // Use keyboard for input
+    private bool useXbox = false; // if debug mode on, actually use xbox for input
 
 	void Awake()
 	{
+        usingHmd = !debugModeOn;
 		if (Instance == null)
 		{
 			Instance = this;
@@ -58,9 +63,9 @@ public class InputManager : MonoBehaviour
 	{
 		if (debugModeOn)
 		{
-			float newMouthBreath = Input.GetAxis("Vertical");
+			float newMouthBreath = useXbox ? Input.GetAxis("XboxRightTrigger") : Input.GetAxis("Vertical");
 			// float newMouthBreath = 1;
-			float newBellyBreath = Input.GetAxis("Horizontal");
+			float newBellyBreath = useXbox ? Input.GetAxis("XboxLeftTrigger") : Input.GetAxis("Horizontal");
 
 			if (newBellyBreath >= 0.8 && bellyBreath < 0.8)
 			{
@@ -73,7 +78,13 @@ public class InputManager : MonoBehaviour
 
 			mouthBreath = newMouthBreath;
 			bellyBreath = newBellyBreath;
-		}
+
+            if (useXbox)
+            {
+                lookHoriz = Input.GetAxis("XboxRightStickHorizontal");
+                lookVert = Input.GetAxis("XboxRightStickVertical");
+            }
+        }
 	}
 
 	void QueryNeulog()
