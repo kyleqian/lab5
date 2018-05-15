@@ -1137,6 +1137,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   personState: 0
   donald: {fileID: 1584518448147898, guid: 3d88c2bb3b2564b71be436ff51c8ceba, type: 2}
+  hitClips:
+  - {fileID: 8300000, guid: 121c66c5c08815a418c87c1852f477c0, type: 3}
+  - {fileID: 8300000, guid: d834ced31a413f744922f8ab67c1b7a6, type: 3}
+  - {fileID: 8300000, guid: 855ff51719bc8234fae34c682706272f, type: 3}
+  - {fileID: 8300000, guid: 32aaf72b65928064eaaa96e4700173de, type: 3}
+  - {fileID: 8300000, guid: 93af2812ed90b8f429f58f1b6700c869, type: 3}
 --- !u!136 &136058370750384092
 CapsuleCollider:
   m_ObjectHideFlags: 1

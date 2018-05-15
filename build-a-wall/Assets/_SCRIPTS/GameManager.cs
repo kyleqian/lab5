@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -6,6 +8,7 @@ public class GameManager : MonoBehaviour
 
 	public GameObject[] people;
 	public Transform spawnCenter;
+    public Text gameOverText;
 
 	float initSpeed = 1;
 	float initSpawnRate = 2;
@@ -40,5 +43,13 @@ public class GameManager : MonoBehaviour
 	public void GameOver()
 	{
 		Debug.Log("GAME OVER!!");
+        gameOverText.gameObject.SetActive(true);
+        Invoke("ResetScene", 3.0f);
 	}
+
+    private void ResetScene()
+    {
+        SceneManager.LoadScene("trump");
+
+    }
 }

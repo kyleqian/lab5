@@ -1,10 +1,12 @@
 ﻿using UnityEngine;
+using UnityEngine.UI;
 
 public class Donald : MonoBehaviour
 {
 	public ParticleSystem ps;
+    public Text healthText;
 
-	float health = 5000;
+    float health;
     GameObject mainCamera;
 
     public static GameObject GetFirstChildTagged(GameObject obj, string tag)
@@ -21,12 +23,15 @@ public class Donald : MonoBehaviour
 
     void Start()
     {
+        health = 500f;
         mainCamera = GetFirstChildTagged(gameObject, "MainCamera");
     }
 
     void Update()
 	{
-		float mouthBreath = InputManager.Instance.mouthBreath;
+        healthText.text = "Robosuit integrity: " + health;
+
+        float mouthBreath = InputManager.Instance.mouthBreath;
 
 		var emissionModule = ps.emission;
 		emissionModule.enabled = mouthBreath > 0.1;
@@ -50,9 +55,10 @@ public class Donald : MonoBehaviour
 	public void TakeDamage(float damage)
 	{
 		health -= damage;
-
+        
 		if (health <= 0)
 		{
+            health = 0;
 			GameManager.Instance.GameOver();
 		}
 	}
