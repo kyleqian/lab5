@@ -24,7 +24,7 @@ public class Wall : MonoBehaviour
 
 	void Start()
 	{
-		health = 10000;
+		health = 100;
 		healthy = true;
 		InputManager.CrossedBellyBreathThreshold += ((bool ascending) =>
 		{
@@ -39,7 +39,7 @@ public class Wall : MonoBehaviour
 			if (Time.time - wallLastDestroyed >= wallTimeout)
 			{
 				healthy = true;
-				health = 10000;
+				health = 100;
 			}
 		}
 	}
