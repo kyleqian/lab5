@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
 	public Transform spawnCenter;
 
 	float initSpeed = 1;
-	float initSpawnRate = 1;
+	float initSpawnRate = 2;
 
 	void Awake()
 	{
@@ -28,7 +28,7 @@ public class GameManager : MonoBehaviour
 		{
 			SpawnPerson();
 		}
-		// InvokeRepeating("SpawnPerson", 0, initSpawnRate);
+		InvokeRepeating("SpawnPerson", 0, initSpawnRate);
 	}
 	
 	void SpawnPerson()
