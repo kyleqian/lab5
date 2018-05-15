@@ -29,17 +29,19 @@ public class Donald : MonoBehaviour
 
     void Update()
 	{
-        healthText.text = "Robosuit integrity: " + health;
+        //healthText.text = "Robosuit integrity: " + health;
 
         float mouthBreath = InputManager.Instance.mouthBreath;
 
 		var emissionModule = ps.emission;
-		emissionModule.enabled = mouthBreath > 0.1;
-        emissionModule.rateOverTime = 12f + mouthBreath * 1.5f;
+		//emissionModule.enabled = mouthBreath > 0.1;
+        //emissionModule.rateOverTime = 12f + mouthBreath * 1.5f;
+        emissionModule.rateOverTime = 12f * mouthBreath;
 
-		var shapeModule = ps.shape;
+        var shapeModule = ps.shape;
         //shapeModule.scale = new Vector3(mouthBreath, mouthBreath, shapeModule.scale.z);
-        shapeModule.angle = 10 + mouthBreath * 35;
+        //shapeModule.angle = 10 + mouthBreath * 35;
+        shapeModule.angle = mouthBreath * 20;
 
         if (!InputManager.Instance.usingHmd)
         {
@@ -59,7 +61,7 @@ public class Donald : MonoBehaviour
 		if (health <= 0)
 		{
             health = 0;
-			GameManager.Instance.GameOver();
-		}
+            GameManager.Instance.GameOver();
+        }
 	}
 }
