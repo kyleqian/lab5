@@ -2,7 +2,7 @@
 
 public class Person : MonoBehaviour
 {
-	public enum PersonState { Walking, AttackingWall, AttackingDonald }
+	public enum PersonState { Walking, AttackingWall, AttackingDonald, Dying }
 	public PersonState personState;
 	
 	public GameObject donald;
@@ -43,6 +43,9 @@ public class Person : MonoBehaviour
 			case PersonState.AttackingDonald:
 				donald.GetComponent<Donald>().TakeDamage(10); // TODO
 				break;
+            case PersonState.Dying:
+            default:
+                break;
 		}
 	}
 
@@ -62,7 +65,7 @@ public class Person : MonoBehaviour
 
 	void OnCollisionExit(Collision collision)
 	{
-		if (collision.transform.tag == "Wall")
+		if (collision.transform.tag == "Wall" || collision.transform.tag == "Donald")
 		{
 			personState = PersonState.Walking;
 			animator.Play("run");
@@ -72,16 +75,21 @@ public class Person : MonoBehaviour
 	public void TakeDamage(float damage)
 	{
 		// TODO
-		health -= damage;
+        if (personState != PersonState.Dying)
+        {
+            health -= damage;
+            rb.AddForce(1000 * (transform.position - donald.transform.position + new Vector3(0, 2.0f, 0)));
 
-		if (health <= 0)
-		{
-			Die();
-		}
+            if (health <= 0)
+            {
+                Die();
+            }
+        }
 	}
 
 	void Die()
 	{
+        personState = PersonState.Dying;
 		animator.Play("death");
 		Destroy(gameObject, 2);
 	}
