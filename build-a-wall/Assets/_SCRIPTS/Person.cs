@@ -8,7 +8,7 @@ public class Person : MonoBehaviour
 	private GameObject donald;
     public AudioClip[] hitClips;
 
-	float health = 100;
+    float health = 50;
 	Animator animator;
 	Rigidbody rb;
 	float speed;
@@ -23,7 +23,7 @@ public class Person : MonoBehaviour
 		animator = GetComponent<Animator>();
 		personState = PersonState.Walking;
 		animator.Play("run");
-		speed = Random.Range(100f, 300f);
+        speed = Random.Range(50f, 100f);
 
 		initPitch = transform.eulerAngles.x;
 		transform.LookAt(donald.transform);
