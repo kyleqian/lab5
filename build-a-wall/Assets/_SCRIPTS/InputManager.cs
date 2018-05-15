@@ -34,7 +34,7 @@ public class InputManager : MonoBehaviour
     private Queue<float> breathQueue = new Queue<float>();
     private int breathQueueMaxSize;
 	private bool debugModeOn = true; // Use keyboard for input
-    private bool useXbox = false; // if debug mode on, actually use xbox for input
+    private bool useXbox = true; // if debug mode on, actually use xbox for input
 
 	void Awake()
 	{
