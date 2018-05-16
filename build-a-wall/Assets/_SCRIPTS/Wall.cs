@@ -2,34 +2,18 @@
 
 public class Wall : MonoBehaviour
 {
-	public static Wall Instance;
-
 	public float health;
 	public bool healthy;
 
 	float wallTimeout = 10;
 	float wallLastDestroyed = -Mathf.Infinity;
 
-	void Awake()
-	{
-		if (Instance == null)
-		{
-			Instance = this;
-		}
-		else
-		{
-			Destroy(this);
-		}
-	}
 
 	void Start()
 	{
 		health = 100;
 		healthy = true;
-		InputManager.CrossedBellyBreathThreshold += ((bool ascending) =>
-		{
-			Turn(ascending);
-		});
+        InputManager.CrossedBellyBreathThreshold += Turn;
 	}
 
 	void Update()
@@ -57,7 +41,12 @@ public class Wall : MonoBehaviour
 		}
 	}
 
-	public void Turn(bool on)
+    private void OnDestroy()
+    {
+        InputManager.CrossedBellyBreathThreshold -= Turn;
+    }
+
+    public void Turn(bool on)
 	{
 		if (!healthy)
 		{

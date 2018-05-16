@@ -53,7 +53,7 @@ public class Person : MonoBehaviour
 			case PersonState.AttackingWall:
                 if (canHit)
                 {
-                    Wall.Instance.TakeDamage(10f); // TODO
+                    FindObjectOfType<Wall>().TakeDamage(10f); // TODO
                     AudioSource.PlayClipAtPoint(hitClips[Random.Range(0, hitClips.Length)], transform.position);
                 }
 				break;
